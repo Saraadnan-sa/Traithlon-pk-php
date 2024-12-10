@@ -8,40 +8,43 @@
                 <div class="flex-vertical">
                     <div class="item1">Contact Us</div>
 
+                    <!-- Success Message -->
+                    <!-- @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif -->
+                    <!-- Success Message -->
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+
+
                     <div class="item2">
                         <div class="contact-form">
-                            <?php
-                            use Spatie\Html\Facades\Html;
-
-                            echo Html::form('POST', '#')
-                                ->children([
-                                    Html::div([
-                                        Html::label('Name:', 'name'),
-                                        Html::text('name')->id('name')->placeholder('Your name')->class('form-control'),
-                                        Html::span()->id('nameError')->class('error')
-                                    ])->class('form-group'),
-                                    
-                                    Html::div([
-                                        Html::label('Email:', 'email'),
-                                        Html::email('email')->id('email')->placeholder('xyz@gmail.com')->class('form-control'),
-                                        Html::span()->id('emailError')->class('error')
-                                    ])->class('form-group'),
-
-                                    Html::div([
-                                        Html::label('Phone Number:', 'phone'),
-                                        Html::text('phone')->id('phone')->placeholder('1234567890')->class('form-control'),
-                                        Html::span()->id('phoneError')->class('error')
-                                    ])->class('form-group'),
-
-                                    Html::button('Submit')
-                                        ->type('button')
-                                        ->class('btn btn-primary')
-                                        ->attribute('onclick', 'validateForm()'),
-
-                                    Html::p()->id('successMessage')->class('success')
-                                ])
-                                ->toHtml();
-                            ?>
+                            <form action="{{ route('contact.store') }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" id="name" name="name" placeholder="Your name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" name="email" placeholder="xyz@gmail.com" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number:</label>
+                                    <input type="text" id="phone" name="phone" placeholder="1234567890" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message:</label>
+                                    <textarea id="message" name="message" placeholder="Your message here..." class="form-control" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -54,9 +57,7 @@
                                 frameborder="0"
                                 scrolling="no"
                                 marginheight="0"
-                                marginwidth="0"
-                            >
-                            </iframe>
+                                marginwidth="0"></iframe>
                         </div>
                     </div>
 

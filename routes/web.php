@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+use App\Http\Controllers\ContactController;
+
+Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
@@ -25,7 +28,7 @@ Route::post('/services', [ServiceController::class, 'store'])->name('services.st
 // });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('services', ServiceController::class)->only(['index', 'create', 'store', 'destroy','edit','update']);
+    Route::resource('services', ServiceController::class)->only(['index', 'create', 'store', 'destroy', 'edit', 'update']);
 });
 
 // Route::middleware('auth')->group(function () {
@@ -45,4 +48,4 @@ Route::middleware('auth')->group(function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
