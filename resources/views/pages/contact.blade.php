@@ -25,28 +25,49 @@
 
                     <div class="item2">
                         <div class="contact-form">
-                            <form action="{{ route('contact.store') }}" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="name">Name:</label>
-                                    <input type="text" id="name" name="name" placeholder="Your name" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <input type="email" id="email" name="email" placeholder="xyz@gmail.com" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Phone Number:</label>
-                                    <input type="text" id="phone" name="phone" placeholder="1234567890" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="message">Message:</label>
-                                    <textarea id="message" name="message" placeholder="Your message here..." class="form-control" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
+                            <?php
+
+                            use Spatie\Html\Facades\Html;
+
+                            echo Html::form()
+                                ->action(route('contact.store'))
+                                ->method('POST')
+                                ->children([
+                                    Html::input('hidden', '_token')->value(csrf_token()),
+
+                                    Html::div([
+                                        Html::label('Name:', 'name'),
+                                        Html::text('name')->id('name')->placeholder('Your name')->class('form-control')->required(),
+                                        Html::span()->id('nameError')->class('error'),
+                                    ])->class('form-group'),
+
+                                    Html::div([
+                                        Html::label('Email:', 'email'),
+                                        Html::email('email')->id('email')->placeholder('xyz@gmail.com')->class('form-control')->required(),
+                                        Html::span()->id('emailError')->class('error'),
+                                    ])->class('form-group'),
+
+                                    Html::div([
+                                        Html::label('Phone Number:', 'phone'),
+                                        Html::text('phone')->id('phone')->placeholder('1234567890')->class('form-control')->required(),
+                                        Html::span()->id('phoneError')->class('error'),
+                                    ])->class('form-group'),
+
+                                    Html::div([
+                                        Html::label('Message:', 'message'),
+                                        Html::textarea('message')->id('message')->placeholder('Your message here...')->class('form-control')->required(),
+                                        Html::span()->id('messageError')->class('error'),
+                                    ])->class('form-group'),
+
+                                    Html::button('Submit')
+                                        ->type('submit')
+                                        ->class('btn btn-primary'),
+                                ])
+                                ->toHtml();
+                            ?>
                         </div>
                     </div>
+
                 </div>
                 <div class="flex-vertical">
                     <div class="item3">
