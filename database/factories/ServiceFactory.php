@@ -1,5 +1,5 @@
 <?php
-
+// In database/factories/ServiceFactory.php
 namespace Database\Factories;
 
 use App\Models\Service;
@@ -12,9 +12,9 @@ class ServiceFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->words(3, true),
-            'details' => $this->faker->paragraph,
-            'price' => $this->faker->numberBetween(1000, 10000),
+            'name' => $this->faker->word,
+            'details' => $this->faker->text,
+            'price' => $this->faker->numberBetween(100, 1000),
         ];
     }
-} 
+}
