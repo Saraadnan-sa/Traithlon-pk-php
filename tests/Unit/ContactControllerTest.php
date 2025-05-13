@@ -4,10 +4,6 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Http\Controllers\ContactController;
 
 class ContactControllerTest extends TestCase
 {
@@ -15,7 +11,7 @@ class ContactControllerTest extends TestCase
 
     public function test_store_contact_success()
     {
-        // Fake valid contact data
+        // Valid contact data
         $contactData = [
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -23,22 +19,17 @@ class ContactControllerTest extends TestCase
             'message' => 'This is a test message.',
         ];
 
-        // Create the request instance
-        $request = Request::create('/contact', 'POST', $contactData);
-        
-        // Instantiate the controller
-        $controller = new ContactController();
-        
-        // Call the store method and check if the data was inserted
-        $response = $controller->store($request);
+        // Make HTTP POST request to the contact route
+        $response = $this->post('/contact', $contactData);
 
-        // Check if the database contains the inserted contact
+        // Assert contact was saved
         $this->assertDatabaseHas('contacts', [
             'name' => 'John Doe',
             'email' => 'john@example.com',
         ]);
 
-        // Check if the success message is present
+        // Assert redirect and session flash message
+        $response->assertRedirect('/');
         $response->assertSessionHas('success', 'Your contact information has been submitted successfully!');
     }
 }

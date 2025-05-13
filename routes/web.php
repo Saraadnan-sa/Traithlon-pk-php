@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home', [PageController::class, 'home'])->name('home.page');
 
-
+Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/dashboard', function () {
      return view('dashboard');
  })->middleware(['auth', 'verified'])->name('dashboard');

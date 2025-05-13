@@ -11,7 +11,7 @@ class GymUserTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_user_can_scroll(): void
     {
         $response = $this->get('/');
 
