@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-
+use App\Model\Service;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -9,6 +9,9 @@ class ServicesTableSeeder extends Seeder
 {
     public function run()
     {
+
+        Service::factory()->count(10)->create();
+        
         DB::table('services')->insert([
             [
                 'name' => 'Boot Camp Fitness',

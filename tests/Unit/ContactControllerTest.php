@@ -2,10 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Http\Controllers\ContactController;
-use App\Models\Contact;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ContactControllerTest extends TestCase
 {
@@ -14,15 +12,25 @@ class ContactControllerTest extends TestCase
     /** @test */
     public function store_contact_success()
     {
-        $data = [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'message' => 'Test message'
+        // Valid contact data
+        $contactData = [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'phone' => '1234567890',
+            'message' => 'This is a test message.',
         ];
 
-        $response = $this->post('/contact', $data);
+        // Make HTTP POST request to the contact route
+        $response = $this->post('/contact', $contactData);
 
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('contacts', $data);
+        // Assert contact was saved
+        $this->assertDatabaseHas('contacts', [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+        ]);
+
+        // Assert redirect and session flash message
+        $response->assertRedirect('/');
+        $response->assertSessionHas('success', 'Your contact information has been submitted successfully!');
     }
 }

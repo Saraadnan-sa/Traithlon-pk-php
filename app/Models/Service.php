@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;  // <-- Add this line
+
 
 class Service extends Model
 {
+ use HasFactory;
+    
     protected $fillable = ['name', 'details', 'price'];
 
 }
+
+
