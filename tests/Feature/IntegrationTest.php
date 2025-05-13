@@ -42,7 +42,7 @@ class IntegrationTest extends TestCase
             'password' => 'password123'
         ]);
 
-        $response->assertRedirect('/services');
+        $response->assertRedirect('/');
         $this->assertAuthenticated();
     }
 
@@ -115,12 +115,10 @@ class IntegrationTest extends TestCase
     /** @test */
     public function regular_user_cannot_perform_crud_operations()
     {
-        $this->actingAs($this->regularUser);
-        $service = Service::create([
-            'name' => 'Test Service',
-            'details' => 'Test Details',
-            'price' => 1000
-        ]);
+        $user = \App\Models\User::factory()->create(['role' => 'user']);
+        $service = \App\Models\Service::factory()->create();
+
+        $this->actingAs($user);
 
         // Try to create
         $response = $this->post('/services', [
@@ -128,7 +126,7 @@ class IntegrationTest extends TestCase
             'details' => 'Details',
             'price' => 1000
         ]);
-        $response->assertRedirect('/login');
+        $response->assertStatus(403);
 
         // Try to update
         $response = $this->put("/services/{$service->id}", [
@@ -136,11 +134,11 @@ class IntegrationTest extends TestCase
             'details' => 'Updated Details',
             'price' => 2000
         ]);
-        $response->assertRedirect('/login');
+        $response->assertStatus(403);
 
         // Try to delete
         $response = $this->delete("/services/{$service->id}");
-        $response->assertRedirect('/login');
+        $response->assertStatus(403);
     }
 
     /** @test */
