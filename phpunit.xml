@@ -30,4 +30,11 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
+
+
+    <php>
+    <ini name="error_reporting" value="E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING"/>
+</php>
+
+
 </phpunit>
